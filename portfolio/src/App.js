@@ -1,29 +1,28 @@
 //@flow
 import React from 'react';
-import {Route, Link, Switch, Router, withRouter} from 'react-router-dom';
+import {Route, Link, Switch, BrowserRouter as Router, withRouter} from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
 import Navigation from './components/Navigation';
 import aboutMe from './pages/aboutMe';
 import Landing from './pages/landing';
+import GasMoney from './pages/gasMoney';
 
-const routing = (
-  <Router>
-  <Switch>
-    <Route exact path='/' component={Landing} />
-    <Route path='/AboutMe' component={aboutMe} />
-  </Switch>
-  
-    </Router>
-);
 function App() {
+  
   return (  
 
-   <> 
+   <Router> 
     <Navigation />
-    {routing}
-    </>
+    <Switch>
+    <Route exact path='/' component={withRouter(Landing)} />
+    <Route path='/About' component={withRouter(aboutMe)} />
+    <Route path='/Gas' component={withRouter(GasMoney)} />
+    
+    </Switch>
+    </Router>
   );
+  
 }
 
-export default withRouter(App);
+export default App;

@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/ElyKauf.github.io/static/css/main.d1b05096.chunk.css",
+    "main.js": "/ElyKauf.github.io/static/js/main.3d161d64.chunk.js",
+    "main.js.map": "/ElyKauf.github.io/static/js/main.3d161d64.chunk.js.map",
+    "runtime-main.js": "/ElyKauf.github.io/static/js/runtime-main.157205d6.js",
+    "runtime-main.js.map": "/ElyKauf.github.io/static/js/runtime-main.157205d6.js.map",
+    "static/js/2.269c618f.chunk.js": "/ElyKauf.github.io/static/js/2.269c618f.chunk.js",
+    "static/js/2.269c618f.chunk.js.map": "/ElyKauf.github.io/static/js/2.269c618f.chunk.js.map",
+    "index.html": "/ElyKauf.github.io/index.html",
+    "precache-manifest.377e3906dc5e87bf7a3f34417465cc17.js": "/ElyKauf.github.io/precache-manifest.377e3906dc5e87bf7a3f34417465cc17.js",
+    "service-worker.js": "/ElyKauf.github.io/service-worker.js",
+    "static/css/main.d1b05096.chunk.css.map": "/ElyKauf.github.io/static/css/main.d1b05096.chunk.css.map",
+    "static/js/2.269c618f.chunk.js.LICENSE": "/ElyKauf.github.io/static/js/2.269c618f.chunk.js.LICENSE",
+    "static/media/logo.svg": "/ElyKauf.github.io/static/media/logo.5d5d9eef.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.157205d6.js",
+    "static/js/2.269c618f.chunk.js",
+    "static/css/main.d1b05096.chunk.css",
+    "static/js/main.3d161d64.chunk.js"
+  ]
+}

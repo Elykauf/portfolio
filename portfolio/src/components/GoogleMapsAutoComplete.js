@@ -14,9 +14,14 @@ import { withStyles } from "@material-ui/core/styles";
 import parse from "autosuggest-highlight/parse";
 import throttle from "lodash/throttle";
 
-type Props = {};
+type Props = {
+  onOptionSelect: place => void,
+  onChange?: newVal => void,
+};
 type State = {
   inputValue: string,
+  lat: number,
+  long: number,
   options: array<any>
 };
 
@@ -32,35 +37,43 @@ export default class GoogleMapsAutoComplete extends React.Component<
     super(props);
     this.state = {
       inputValue: "",
+      lat: 0,
+      long: 0,
       options: []
     };
+
+    this.updateOptionsThrottled = throttle(this.updateOptions, 300);
   }
 
   updateOptions = async () => {
+    const { lat, long } = this.props;
     const placeToSearch = this.state.inputValue;
-    const requestUrl = `https://cors-anywhere.herokuapp.com/maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURI(
+    const currentLocString =
+      lat !== 0 && long !== 0 ? `&location=${lat},${long}&radius=25000` : "";
+    const proxyurl = "https://cors-anywhere.herokuapp.com/";
+    const requestUrl = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURI(
       placeToSearch
-    )}&key=AIzaSyCmFG2_lNsVip681FctETIpGuqiFnABTCc`;
+    )}${currentLocString}&key=AIzaSyCmFG2_lNsVip681FctETIpGuqiFnABTCc`;
 
-    const options = {
-      headers: new Headers({ "content-type": "application/json" }),
-      mode: "no-cors",
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Credentials": true,
-    };
-    let rawData = await fetch(requestUrl, options);
-    let data = await rawData.json();
-
-    console.log(data);
-    //this.setState({options: data})
+    fetch(proxyurl + requestUrl)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        this.setState({ options: data.predictions });
+      })
+      .catch(error => {});
   };
+
   handleChange = event => {
-    this.setState({ inputValue: event.target.value }, this.updateOptions);
+    this.setState(
+      { inputValue: event.target.value},
+      this.updateOptionsThrottled
+    );
   };
 
-  //googleMapsApiKey="AIzaSyCmFG2_lNsVip681FctETIpGuqiFnABTCc"
   render() {
-    const { inputValue, options } = this.state;
+    const { inputValue, options, selectedPlace } = this.state;
 
     return (
       <>
@@ -68,9 +81,10 @@ export default class GoogleMapsAutoComplete extends React.Component<
         <Autocomplete
           id="google-map-demo"
           style={{ width: 300 }}
-          getOptionLabel={option =>
-            typeof option === "string" ? option : option.description
-          }
+          getOptionLabel={option => {
+            this.props.onOptionSelect(option.place_id);
+            return typeof option === "string" ? option : option.place_id;
+          }}
           filterOptions={x => x}
           options={this.state.options}
           autoComplete
@@ -80,10 +94,17 @@ export default class GoogleMapsAutoComplete extends React.Component<
           renderInput={params => (
             <TextField
               {...params}
-              label="Add a location"
+              label={this.props.label || "From"}
               variant="outlined"
               fullWidth
-              onChange={throttle(this.handleChange, 500)}
+              onChange={event => {
+                if (this.props.onChange) {
+                  this.props.onChange(event.target.value);
+                  this.setState({inputValue: event.target.value})
+                } else {
+                  this.handleChange(event)
+                }
+              }}
             />
           )}
           renderOption={option => {

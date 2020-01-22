@@ -1,6 +1,7 @@
 //@flow
 import React from 'react';
 import {Route, Link, Switch, BrowserRouter as Router, withRouter} from 'react-router-dom';
+import {LoadScript}  from '@react-google-maps/api';
 import logo from './logo.svg';
 import './App.css';
 import Navigation from './components/Navigation';
@@ -13,6 +14,11 @@ function App() {
   return (  
 
    <Router> 
+   <LoadScript
+          id="script-loader"
+          googleMapsApiKey="AIzaSyCmFG2_lNsVip681FctETIpGuqiFnABTCc"
+          libraries={['places']}
+        >
     <Navigation />
     <Switch>
     <Route exact path='/' component={withRouter(Landing)} />
@@ -20,6 +26,7 @@ function App() {
     <Route path='/Gas' component={withRouter(GasMoney)} />
     
     </Switch>
+    </LoadScript>
     </Router>
   );
   

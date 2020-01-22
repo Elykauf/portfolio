@@ -51,11 +51,6 @@ class PriceEstimator extends React.Component<Props, State> {
             <p>{`Time: ${directions.routes["0"].legs[0].duration.text}`}</p>
           </>
         )}
-        <LoadScript
-          id="script-loader"
-          googleMapsApiKey="AIzaSyCmFG2_lNsVip681FctETIpGuqiFnABTCc"
-          libraries={["places"]}
-        >
           <GoogleMap
             id="ElyGasMoney"
             center={{
@@ -83,7 +78,6 @@ class PriceEstimator extends React.Component<Props, State> {
               />
             )}
           </GoogleMap>
-        </LoadScript>
       </>
     );
   }

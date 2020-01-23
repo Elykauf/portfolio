@@ -7,6 +7,18 @@ import {
   DirectionsService,
   DirectionsRenderer
 } from "@react-google-maps/api";
+import {
+  Typography,
+  IconButton,
+  Button,
+  Input,
+  Paper,
+  Container,
+  Grid,
+  Card,
+  Box,
+} from "@material-ui/core";
+
 
 //{`Miles: ${(directions.routes['0'].legs[0].distance.value / 1000 * 0.621371).toFixed(2)}`}
 //{`Time: ${(directions.routes['0'].legs[0].duration.value / 60).toFixed(2)}`}
@@ -57,16 +69,19 @@ class PriceEstimator extends React.Component<Props, State> {
     const directions = this.state.response;
 
     let cost;
-    if (directions) {
-    }
     return (
       <>
-        {directions && (
-          <>
-            <p>{`Miles: ${directions.routes["0"].legs[0].distance.text}`}</p>
-            <p>{`Time: ${directions.routes["0"].legs[0].duration.text}`}</p>
-          </>
-        )}
+       {directions && (
+          <Box display="flex" height="80" alignItems="center" justifyContent="center">
+          <Container>
+            <Typography variant="body1">{`Miles: ${directions.routes["0"].legs[0].distance.text}`}</Typography>
+            </Container>
+            <Container>
+            <Typography variant="body1">{`Time: ${directions.routes["0"].legs[0].duration.text}`}</Typography>
+            </Container>
+            </Box>
+       )}
+       <Box display="flex" height="420" alignItems="center" justifyContent="center">
           <GoogleMap
             id="ElyGasMoney"
             center={{
@@ -74,7 +89,7 @@ class PriceEstimator extends React.Component<Props, State> {
               lng: this.props.long,
             }}
             zoom={12}
-            mapContainerStyle={{ width: "100%", height: "400px" }}
+            mapContainerStyle={{ width: "95%", height: "400px" }}
           >
             {from !== "" && to !== "" && showMap && (
               <DirectionsService
@@ -94,6 +109,7 @@ class PriceEstimator extends React.Component<Props, State> {
               />
             )}
           </GoogleMap>
+          </Box>
       </>
     );
   }

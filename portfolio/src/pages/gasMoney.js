@@ -11,6 +11,7 @@ import {
   Container,
   Grid,
   Card,
+  Box,
 } from "@material-ui/core";
 import GoogleMapsAutoComplete from "../components/GoogleMapsAutoComplete";
 import MyLocationIcon from "@material-ui/icons/MyLocation";
@@ -146,38 +147,63 @@ class GasMoney extends React.Component<Props, State> {
 
     return (
       <>
-      <Paper>
       <Container maxWidth={"md"} stlye={{textAlign: "center"}}>
       <Container maxWidth={"sm"}>
       <Grid>
+        <Box
+              display="flex"
+              height={60}
+              alignItems="center"
+              justifyContent="center"
+            >
           <Typography>Gas Money</Typography>
+          </Box>
           <Card>
           <br />
-          <form>
+        <form>
             <Container>
+            <Box
+              display="flex"
+              height={80}
+              alignItems="center"
+              justifyContent="center"
+            >
             <GoogleMapsAutoComplete
               onOptionSelect={this.setFromCoords}
               label={"From"}
             />
+            </Box>
             <br />
+            <Box
+              display="flex"
+              height={80}
+              alignItems="center"
+              justifyContent="center"
+            >
             <GoogleMapsAutoComplete
               onOptionSelect={this.setToCoords}
               label={"To"}
             />
+            </Box>
             </Container>
             <br />
-            <Container maxWidth="sm">
+            <Box
+              display="flex"
+              height={80}
+              alignItems="center"
+              justifyContent="center"
+            >
             <Button size="m" variant="contained" color="primary" onClick={() => (this.updateMap())}>Calculate Price</Button>
-            
-            </Container>
+            </Box>
           </form>
           <br />
           </Card>
-          <Paper>
           <br />
           <Container maxWidth={"sm"}>
-          <p>{`cost: ${cost}`}</p>
-          <div id="mapSomething" style={{ height: "400px" }}>
+          <Paper>
+          <Box display="flex" height="80" alignItems="center" justifyContent="center">
+          {(cost !== 0) && <Typography>{`cost: ${cost}`}</Typography>}
+          </Box>
             <PriceEstimator
               from={origin}
               to={destination}
@@ -186,14 +212,12 @@ class GasMoney extends React.Component<Props, State> {
               showMap
               AfterDirectionFetch={this.afterDirections}
             />
-          </div>
-          </Container>
-          </Paper>
           <br />
+          </Paper>
+          </Container>
           </Grid>
           </Container>
         </Container>
-        </Paper>
       </>
     );
   }

@@ -17,7 +17,10 @@ type State = {
 type Props = {
   to: string,
   from: string,
-  AfterDirectionFetch: () => void
+  lat: number,
+  long: number,
+  showMap: boolean,
+  AfterDirectionFetch: (cost: number) => void
 };
 
 class PriceEstimator extends React.Component<Props, State> {
@@ -27,22 +30,35 @@ class PriceEstimator extends React.Component<Props, State> {
       response: null
     };
   }
+  calculateCost = () => {
+    const directions = this.state.response;
+    let cost = 0;
+    if (directions) {
+    const miles = (directions.routes['0'].legs[0].distance.value / 1000 * 0.621371).toFixed(2)
+    const time = (directions.routes['0'].legs[0].duration.value / 60).toFixed(2)
+    cost = (0.35 * parseInt(miles) + 0.3 * parseInt(time) + 5.00);
+    }
+    return cost.toFixed(2);
+  }
   directionsCallback = (newResponse: any) => {
-    console.log(newResponse);
-
+    let cost = 0;
     if (newResponse !== null) {
       if (newResponse.status === "OK") {
-        this.setState({ response: newResponse });
+        this.setState({ response: newResponse }, () => cost = this.calculateCost());
       } else {
         console.log("response: ", newResponse);
       }
     }
-    this.props.AfterDirectionFetch();
+    
+    this.props.AfterDirectionFetch(cost);
   };
   render() {
-    const { from, to } = this.props;
+    const { from, to, showMap } = this.props;
     const directions = this.state.response;
 
+    let cost;
+    if (directions) {
+    }
     return (
       <>
         {directions && (
@@ -54,13 +70,13 @@ class PriceEstimator extends React.Component<Props, State> {
           <GoogleMap
             id="ElyGasMoney"
             center={{
-              lat: -34.397,
-              lng: 150.644
+              lat: this.props.lat,
+              lng: this.props.long,
             }}
-            zoom={8}
+            zoom={12}
             mapContainerStyle={{ width: "100%", height: "400px" }}
           >
-            {from !== "" && to !== "" && (
+            {from !== "" && to !== "" && showMap && (
               <DirectionsService
                 options={{
                   destination: to,

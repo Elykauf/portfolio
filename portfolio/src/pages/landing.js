@@ -10,11 +10,15 @@ import {
   Box
 } from "@material-ui/core";
 
+import { withRouter } from 'react-router'
+
 type State = {};
 
-type Props = {};
+type Props = {
+    history: any,
+};
 
-export default class Landing extends React.Component<Props, State> {
+class Landing extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {};
@@ -40,7 +44,7 @@ export default class Landing extends React.Component<Props, State> {
               alignItems="center"
               justifyContent="center"
             >
-              <Button variant="contained" href={"/Gas"} color="primary">
+              <Button variant="contained" onClick={() => this.props.history.push("/gas")} color="primary">
                 Gas Money
               </Button>
             </Box>
@@ -50,3 +54,5 @@ export default class Landing extends React.Component<Props, State> {
     );
   }
 }
+
+export default withRouter(Landing);

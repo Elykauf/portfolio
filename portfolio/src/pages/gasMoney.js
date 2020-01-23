@@ -138,13 +138,6 @@ class GasMoney extends React.Component<Props, State> {
     //const {classes} = this.props;
     const { from, to, origin, destination, cost, lat, long } = this.state;
 
-
-    const selectedFrom = this.state.fromLoc;
-    console.log("Selected", origin);
-    const selectedTo = this.state.toLoc;
-    console.log("Selected", destination);
-    
-
     return (
       <>
       <Container maxWidth={"md"} stlye={{textAlign: "center"}}>
@@ -193,7 +186,7 @@ class GasMoney extends React.Component<Props, State> {
               alignItems="center"
               justifyContent="center"
             >
-            <Button size="m" variant="contained" color="primary" onClick={() => (this.updateMap())}>Calculate Price</Button>
+            <Button size="medium" variant="contained" color="primary" onClick={() => (this.updateMap())}>Calculate Price</Button>
             </Box>
           </form>
           <br />
